@@ -1,15 +1,23 @@
-document.addEventListener("DOMContentLoaded", function(event) {
+$(document).ready(function(){
+    var $search = $('#lookup');
+    var $result = $('#result');
     
-    var $search = document.getElementById('lookup');
-    var $result = document.getElementById('result');
-    $search.addEventListener("click", function() {
-        var country = document.getElementById('country').value;
+    var $all ='';
+    
+    $search.on("click", function() {
+        var country = $('#country').val();
+        if(document.getElementById('all').checked) {
+            $all = $('#all').val();
+        }
+        else {
+            $all='';
+        }
         			
         var xhr = new XMLHttpRequest();
-        xhr.open('GET', 'world.php?country=' + country);
+        xhr.open('GET', 'world.php?country=' + country + '&all=' + $all);
         xhr.onload = function() {
             if (xhr.status === 200) {
-                $result.innerHTML =xhr.responseText;
+                $result.html(xhr.responseText) ;
             }
             else {
                 alert(xhr.status);
@@ -19,3 +27,5 @@ document.addEventListener("DOMContentLoaded", function(event) {
     			
     });
 });
+    
+   
